@@ -8,9 +8,9 @@ namespace MyCompanyManager.Controllers
 {
     public class HomeController : Controller
     {
-        public String Index()
+        public ActionResult Index()
         {
-            return "Home/Index";
+            return View();
         }
     }
 }

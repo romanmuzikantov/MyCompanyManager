@@ -4,9 +4,21 @@
     ViewData["Title"] = "Connect";
 }
 
-<h2>Connect</h2>
-<form asp-action="Connect">
-    <label asp-for="Email"></label><input asp-for="Email" /> <br />
-    <label asp-for="Password"></label><input asp-for="Password" /> <br />
-    <input type="submit" />
-</form>
+<header>
+    <div class="title">
+        <h1>MyCompany Manager</h1>
+    </div>
+    <nav>
+        <a href="#" class="blue-button">Se connecter</a>
+    </nav>
+</header>
+<body>
+    <div class="connect-box">
+        <h3>Connexion</h3>
+        <form asp-action="Connect">
+            <label asp-for="Email"></label><input asp-for="Email" /> <br />
+            <label asp-for="Password"></label><input asp-for="Password" /> <br />
+            <input type="submit" />
+        </form>
+    </div>
+</body>

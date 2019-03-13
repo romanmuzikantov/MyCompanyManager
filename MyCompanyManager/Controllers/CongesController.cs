@@ -20,7 +20,7 @@ namespace MyCompanyManager.Controllers
             return View(conges);
         }
 
-        public ActionResult Deny()
+        public ActionResult Handle()
         {
             Conges conges = new Conges();
             return View(conges);
