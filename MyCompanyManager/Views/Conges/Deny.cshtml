@@ -1,0 +1,13 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model MyCompanyManager.Models.Conges
+@{
+    ViewData["Title"] = "Deny";
+}
+
+<h2>Deny</h2>
+
+<form asp-action="Deny">
+    <label asp-for="Comment"></label><input asp-for="Comment"/><br/>
+    <input type="button" />
+    <input type="button" />
+</form>
