@@ -1,0 +1,120 @@
+﻿@model MyCompanyManager.Models.MyCompanyManagerViewModels.CongesConflits
+
+<div class="mx-3 mt-3 px-3 py-4 bg-dark row align-items-center">
+    <div class="col-2">
+        <div class="btn btn-primary btn-circle"><i class="fas fa-user"></i></div>
+    </div>
+    <div class="text-light col-2">
+        #@Html.DisplayFor(modelItem => Model.Conge.CongeID)
+    </div>
+    <div class="text-light col-2">
+        @Html.DisplayFor(modelItem => Model.Conge.Collaborateur.FullName)
+    </div>
+    <div class="text-light col-2"><i>Il y a @Html.DisplayFor(modelItem => ((TimeSpan)(DateTime.Now - Model.Conge.EnvoiDate)).Days) jour(s)</i></div>
+    <div class="col-2 text-uppercase">
+        @if (Model.Conge.Statut.Label == MyCompanyManager.Models.Statuts.Accepte)
+        {
+            <div class="text-success"><i>@Html.DisplayFor(modelItem => Model.Conge.Statut.Label)</i></div>
+        }
+        else if (Model.Conge.Statut.Label == MyCompanyManager.Models.Statuts.Refuse)
+        {
+            <div class="text-danger"><i>@Html.DisplayFor(modelItem => Model.Conge.Statut.Label)</i></div>
+        }
+        else
+        {
+            <div class="text-warning"><i>@Html.DisplayFor(modelItem => Model.Conge.Statut.Label)</i></div>
+        }
+    </div>
+    <div class="col-2 d-flex justify-content-end">
+        <button type="button" class="btn btn-light btn-circle dropdown-button" /><i class="fas fa-arrow-down"></i>
+    </div>
+</div>
+<div class="dropdown-content bg-light mx-3 mb-4 d-flex align-items-center row" style="height: 0; visibility: hidden">
+    <div class="col-8">
+        <div class="row">
+            <div class="col-2"><span class="text-title">@Html.DisplayFor(modelItem => Model.Conge.Collaborateur.Specialite.Label)</span></div>
+            <div class="col-2"><span class="text-title">@Html.DisplayFor(modelItem => Model.Conge.CongeType.Label)</span></div>
+            <div class="col-4">Du <span class="text-title">@Html.DisplayFor(modelItem => Model.Conge.DateDebut)</span> au <span class="text-title">@Html.DisplayFor(modelItem => Model.Conge.DateFin)</span></div>
+            <div class="col-3">Déposé le <span class="text-title">@Html.DisplayFor(modelItem => Model.Conge.EnvoiDate)</span></div>
+        </div>
+        @if (Model.Conge.Statut.Label == MyCompanyManager.Models.Statuts.Attente)
+        {
+            <div class="dropdown-div mt-3">
+                <span class="text-title">Conflits : @Html.DisplayFor(modelItem => Model.ConflitsCount)</span>
+                @if (!Model.CanAccept)
+                {
+                    <div class="text-danger">Trop de conflits</div>
+                }
+                @if (Model.ConflitsCount > 0)
+                {
+
+                }
+                <form asp-action="Handle" method="get">
+                    <input type="hidden" name="ids" value="@Model.Conge.CongeID" />
+                    @foreach (var conge in Model.Conflits)
+                    {
+                        <input type="hidden" name="ids" value="@conge.CongeID" />
+                    }
+                    <input class="btn-link bg-transparent border-0 px-0" type="submit" value="Voir les conflits" />
+                </form>
+            </div>
+        }
+    </div>
+    @if (Model.Conge.Statut.Label == MyCompanyManager.Models.Statuts.Attente || Model.Conge.Statut.Label == MyCompanyManager.Models.Statuts.Suppression)
+    {
+    <form asp-action="Handle" class="col-4 denyBtnComment" method="post">
+
+        <input type="hidden" value="@Model.Conge.CongeType.Label" name="type" />
+        <input type="hidden" value="@Model.Conge.CongeID" name="id" />
+        @if (Model.Conge.Statut.Label == MyCompanyManager.Models.Statuts.Attente)
+        {
+            <label asp-for="Conge.Commentaire" class="bg-dark text-light mb-0 ml-1 p-2"></label>
+            <textarea v-model="comment" class="form-control" style="resize: none;" name="commentaire"></textarea>
+            @if (!Model.CanAccept && Model.Conge.CongeType.Label == MyCompanyManager.Models.Types.Maladie)
+            {
+                <div class="text-danger">ATTENTION : Vous allez manquer de collaborateurs (@Model.Conge.Collaborateur.Specialite.Label)</div>
+            }
+            @if (Model.CanAccept)
+            {
+                <input type="hidden" value="canAccept" name="canAccept" />
+            }
+            <div class="mt-3 d-flex justify-content-between">
+                @if (Model.Conge.CongeType.Label == MyCompanyManager.Models.Types.Conge)
+                {
+                    <input v-if="comment && comment.length >= 10" class="btn-deny py-2" type="submit" value="REFUSER" name="btnDeny" />
+                    <span v-else class="btn-disabled py-2 d-flex justify-content-center" data-toggle="tooltip" title="Veuillez entrer un commentaire d'au moins 10 caractères">
+                        <input class="bg-transparent border-0" type="submit" value="REFUSER" disabled />
+                    </span>
+                }
+                else
+                {
+                    <span class="btn-disabled py-2 d-flex justify-content-center" data-toggle="tooltip" title="Un congé maladie ne peut être refusé">
+                        <input class="bg-transparent border-0" type="submit" value="REFUSER" disabled />
+                    </span>
+                }
+                @if (Model.CanAccept || Model.Conge.CongeType.Label == MyCompanyManager.Models.Types.Maladie)
+                {
+                    <input class="btn-accept py-2" type="submit" value="ACCEPTER" name="btnAccept" />
+                }
+                else
+                {
+                    <span class="btn-disabled py-2 d-flex justify-content-center" data-toggle="tooltip" title="Trop de conflits">
+                        <input class="bg-transparent border-0" type="submit" value="ACCEPTER" disabled />
+                    </span>
+                }
+            </div>
+        }
+        else
+        {
+            <input class="btn-accept py-2" type="submit" value="CONFIRMER" name="btnConfirmDelete" />
+        }
+    </form>
+    }
+    else
+    {
+        <div class="col-4">
+            <div class="text-title dropdown-div">Commentaire :</div>
+            <div class="dropdown-div">@Html.DisplayFor(modelItem => Model.Conge.Commentaire)</div>
+        </div>
+    }
+</div>

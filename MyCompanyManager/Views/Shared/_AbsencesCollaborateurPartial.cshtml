@@ -1,0 +1,24 @@
+﻿@model MyCompanyManager.Models.Conge
+
+<div class="mx-3 mt-3 px-3 py-4 bg-dark row align-items-center">
+    <div class="col-2">
+        <div class="btn btn-primary btn-circle"><i class="fas fa-user"></i></div>
+    </div>
+    <div class="text-light col-2">
+        #@Html.DisplayFor(modelItem => Model.CongeID)
+    </div>
+    <div class="text-light col-2">
+        @Html.DisplayFor(modelItem => Model.Collaborateur.FullName)
+    </div>
+    <div class="text-light col-2"><i>Il y a @Html.DisplayFor(modelItem => ((TimeSpan)(DateTime.Now - Model.EnvoiDate)).Days) jour(s)</i></div>
+    <div class="text-light text-capitalize col-2"><i>@Html.DisplayFor(modelItem => Model.CongeType.Label)</i></div>
+    <div class="col-2 d-flex justify-content-end">
+        <button type="button" class="btn btn-light btn-circle dropdown-button" /><i class="fas fa-arrow-down"></i>
+    </div>
+</div>
+<div class="dropdown-content bg-light mx-3 mb-4 d-flex align-items-center row" style="height: 0; visibility: hidden">
+    <div class="offset-1 col-2"><span class="text-title">@Html.DisplayFor(modelItem => Model.Collaborateur.Equipe.Label)</span></div>
+    <div class="col-2"><span class="text-title">@Html.DisplayFor(modelItem => Model.Collaborateur.Specialite.Label)</span></div>
+    <div class="col-3">Du <span class="text-title">@Html.DisplayFor(modelItem => Model.DateDebut)</span> au <span class="text-title">@Html.DisplayFor(modelItem => Model.DateFin)</span></div>
+    <div class="col-4">Assignée le <span class="text-title">@Html.DisplayFor(modelItem => Model.EnvoiDate)</span></div>
+</div>

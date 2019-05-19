@@ -1,13 +1,97 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model MyCompanyManager.Models.Conges
+﻿@model MyCompanyManager.Models.MyCompanyManagerViewModels.CongeOverallData
+
 @{
-    ViewData["Title"] = "Deny";
+    ViewData["Title"] = "Index";
 }
 
-<h2>Deny</h2>
+@section NavigationMain
+    {
+    @{
+        await Html.RenderPartialAsync("_NavigationFilterCongePartial");
+    }
+}
 
-<form asp-action="Deny">
-    <label asp-for="Comment"></label><input asp-for="Comment"/><br/>
-    <input type="button" />
-    <input type="button" />
-</form>
+<div class="mt-3 pl-3">
+    <h2>DEMANDES DE CONGES DE VOTRE EQUIPE</h2>
+    <div class="bg-primary-light mb-3">
+        @if (TempData["ConflictMode"] != null && (bool)TempData["ConflictMode"])
+        {
+            <h3 class="p-2">DEMANDE ACTUELLEMENT GEREE</h3>
+            <div class="pb-3">
+                @foreach (var conge in Model.CongeEnAttente)
+                {
+                    await Html.RenderPartialAsync("_CongesResponsablePartial", conge);
+                }
+            </div>
+            <h3 class="p-2">CONFLITS</h3>
+            <div class="pb-3">
+                @foreach (var conge in Model.CongeModel)
+                {
+                    await Html.RenderPartialAsync("_CongesResponsablePartial", conge);
+                }
+            </div>
+        }
+        else
+        {
+            <h3 class="p-2">RESUME</h3>
+            <div class="pb-3">
+                @foreach (var conge in Model.CongeEnAttente)
+                {
+                    await Html.RenderPartialAsync("_CongesResponsablePartial", conge);
+                }
+                @foreach (var conge in Model.CongeModel)
+                {
+                    await Html.RenderPartialAsync("_CongesResponsablePartial", conge);
+                }
+            </div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".dropdown-button").click(function () {
+            let index = $(".dropdown-button").index(this);
+            if ($(".dropdown-content")[index].style.height == "0px") {
+                $(".dropdown-content")[index].style.height = "auto";
+                $(".dropdown-content")[index].style.opacity = "1";
+                $(".dropdown-content")[index].style.padding = "15px";
+                $(".dropdown-content")[index].style.visibility = "visible";
+                $(".fa-arrow-down")[index].classList.add("fa-rotate-180");
+                let items = $(".dropdown-content")[index];
+                for (let i = 0; i < items.childElementCount; i++) {
+                    for (let j = 0; j < items.children[i].childElementCount; j++) {
+                        items.children[i].children[j].style.height = "auto";
+                    }
+                }
+            } else {
+                $(".dropdown-content")[index].style.visibility = "hidden";
+                $(".dropdown-content")[index].style.height = "0";
+                $(".dropdown-content")[index].style.padding = "0";
+                $(".dropdown-content")[index].style.opacity = "0";
+                $(".fa-arrow-down")[index].classList.remove("fa-rotate-180");
+                let items = $(".dropdown-content")[index];
+                for (var i = 0; i < items.childElementCount; i++) {
+                    for (var j = 0; j < items.children[i].childElementCount; j++) {
+                        items.children[i].children[j].style.height = "0";
+                    }
+                }
+            }
+        })
+    })
+</script>
+<script>
+    const vues = document.querySelectorAll(".denyBtnComment");
+    const denyBtn = document.querySelectorAll(".btn-deny")
+    Array.prototype.forEach.call(vues, (el, index) => new Vue({
+        el,
+        data: {
+            comment: ''
+        }
+    }))
+</script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>

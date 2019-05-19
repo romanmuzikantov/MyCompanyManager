@@ -1,28 +1,18 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 
-<header>
-    <div class="title">
-        <h1>MyCompany Manager</h1>
-    </div>
-    <nav>
-        <a href="#" class="blue-button">Se connecter</a>
-    </nav>
-</header>
-<body>
-    <div class="hero">
-        <div class="hero-content">
-            <h2>MyCompany Manager</h2>
-            <p>
-                MyCompany Manager permet à un employé de gérer ses demandes de congés et ses absences, le tout en quelques clics.
-            </p>
-            <p>
-                Le travail du responsable d'équipe est également facilité puisqu'il a accès à toutes les informations nécessaires sur une seule et même plateforme.
-            </p>
-            <a href="#" class="blue-button">Se connecter</a>
+        <div class="hero">
+            <div class="d-flex flex-column justify-content-center h-100 col-sm-6 col-md-6 col-lg-4 offset-lg-2 offset-md-1 offset-sm-0">
+                <div class="bg-dark-opacity p-4">
+                    <h2 class="text-white">MyCompany Manager</h2>
+                    <p class="text-white">
+                        MyCompany Manager permet à un employé de gérer ses demandes de congés et ses absences, le tout en quelques clics.
+                    </p>
+                    <p class="text-white">
+                        Le travail du responsable d'équipe est également facilité, il a accès à toutes les informations nécessaires sur une seule et même plateforme.
+                    </p>
+                    <a class="nav-link custom-nav-link text-center" asp-area="Identity" asp-page="/Account/Login">SE CONNECTER</a>
+                </div>
+            </div>
         </div>
-    </div>
-</body>
-

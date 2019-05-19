@@ -1,0 +1,109 @@
+﻿@model MyCompanyManager.Models.MyCompanyManagerViewModels.CongeOverallData
+
+<div class="sticky-top nav-main">
+    <div class="">
+        <ul class="pl-4 pr-4 pt-4 nav container-fluid d-flex flex-column">
+            <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Conges" asp-action="Index">ACCUEIL</a></li>
+            @if (Model.CurrentUserRole == "Collaborateur")
+            {
+                <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Conges" asp-action="Apply">NOUVELLE DEMANDE DE CONGES</a></li>
+                <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Conges" asp-action="Show">MES DEMANDES DE CONGES</a></li>
+                <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Absences" asp-action="Show">MES ABSENCES</a></li>
+            }
+            @if (Model.CurrentUserRole == "Responsable")
+            {
+                <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Conges" asp-action="Handle">GERER LES DEMANDES DE CONGES</a></li>
+                <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Absences" asp-action="Show">HISTORIQUE DES ABSENCES</a></li>
+            }
+            @if (Model.CurrentUserRole == "Directeur")
+            {
+                <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Conges" asp-action="Show">DEMANDES DE CONGES</a></li>
+                <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Absences" asp-action="Show">ABSENCES</a></li>
+                <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Statistiques" asp-action="Index">STATISTIQUES</a></li>
+            }
+        </ul>
+    </div>
+    <div class="bg-light mx-4 p-2">
+        <div class="text-dark"><h4>FILTRE</h4></div>
+        <form class="py-3" asp-action="Show" method="get">
+            <div class="col-12">
+                <label class="mb-0 bg-dark text-light p-1 ml-1">ID</label>
+                <div>
+                    <input class="form-control" type="number" name="ID" value="@ViewData["ID"]" />
+                </div>
+            </div>
+            @if (Model.CurrentUserRole == "Responsable")
+            {
+                <div class="col-12 mt-2">
+                    <label class="mb-0 bg-dark text-light p-1 ml-1">COLLABORATEUR</label>
+                    <div>
+                        <input class="form-control" type="text" name="Nom" value="@ViewData["Collaborateur"]" />
+                    </div>
+                </div>
+            }
+            <div class="col-12 mt-2">
+                <label class="mb-0 bg-dark text-light p-1 ml-1">TYPE</label>
+                <div>
+                    <select class="custom-select" name="Type">
+                        <option selected>/</option>
+                        @foreach (var type in Model.CongeTypes)
+                        {
+                            <option value="@type.CongeTypeID">@Html.DisplayFor(modelItem => type.Label)</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <label class="mb-0 bg-dark text-light p-1 ml-1">QUAND ?</label>
+                <div>
+                    <select class="custom-select" name="time">
+                        <option value="before" selected>Passé</option>
+                        <option value="today">Aujourd'hui</option>
+                        <option value="incoming">A venir</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <label class="mb-0 bg-dark text-light p-1 ml-1">DATE DEBUT</label>
+                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" value="@ViewData["Debut"]" name="Debut" data-target="#datetimepicker1" />
+                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <label class="mb-0 bg-dark text-light p-1 ml-1">DATE FIN</label>
+                <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" value="@ViewData["Fin"]" name="Fin" data-target="#datetimepicker2" />
+                    <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center mt-3">
+                <input type="submit" value="CHERCHER" class="nav-link btn-confirm-dark" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            locale: 'fr',
+            format: 'L'
+        });
+        $('#datetimepicker2').datetimepicker({
+            locale: 'fr',
+            format: 'L',
+            useCurrent: false
+        });
+        $("#datetimepicker1").on("change.datetimepicker", function (e) {
+            $('#datetimepicker2').datetimepicker('minDate', e.date);
+        });
+        $("#datetimepicker2").on("change.datetimepicker", function (e) {
+            $('#datetimepicker1').datetimepicker('maxDate', e.date);
+        });
+    });
+</script>

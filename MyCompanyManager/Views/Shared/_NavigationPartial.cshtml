@@ -1,0 +1,26 @@
+﻿@model string
+
+<div class="sticky-top nav-main">
+    <div class="">
+        <ul class="pl-4 pr-4 pt-4 nav container-fluid d-flex flex-column">
+            <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Conges" asp-action="Index">ACCUEIL</a></li>
+            @if (Model == "Collaborateur")
+            {
+                <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Conges" asp-action="Apply">NOUVELLE DEMANDE DE CONGES</a></li>
+                <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Conges" asp-action="Show">MES DEMANDES DE CONGES</a></li>
+                <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Absences" asp-action="Show">MES ABSENCES</a></li>
+            }
+            @if (Model == "Responsable")
+            {
+                <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Conges" asp-action="Handle">GERER LES DEMANDES DE CONGES</a></li>
+                <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Absences" asp-action="Show">HISTORIQUE DES ABSENCES</a></li>
+            }
+            @if (Model == "Directeur")
+            {
+                <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Conges" asp-action="Show">DEMANDES DE CONGES</a></li>
+                <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Absences" asp-action="Show">ABSENCES</a></li>
+                <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Statistiques" asp-action="Index">STATISTIQUES</a></li>
+            }
+        </ul>
+    </div>
+</div>

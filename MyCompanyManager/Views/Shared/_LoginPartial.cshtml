@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MyCompanyManager.Models
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <button type="submit" class="pt-2 pb-2 pl-3 pr-3 btn-disconnect nav-link">DECONNEXION</button>
+            </li>
+        </ul>
+    </form>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a class="pt-2 pb-2 pl-3 pr-3 btn-connect nav-link" asp-area="Identity" asp-page="/Account/Login">CONNEXION</a></li>
+    </ul>
+}

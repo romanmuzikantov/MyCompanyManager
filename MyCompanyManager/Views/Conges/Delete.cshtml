@@ -1,0 +1,84 @@
+﻿@model MyCompanyManager.Models.Conge
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@section NavigationMain
+{
+    @{
+        await Html.RenderPartialAsync("_NavigationPartial", "Collaborateur");
+    }
+}
+<div class="mt-3 pl-3">
+    <h2>SUPPRESSION D'UNE DEMANDE DE CONGE</h2>
+    <div class="bg-primary-light mb-3">
+        <h3 class="p-2">CONFIRMATION</h3>
+        <div>
+            <p class="mx-2 px-3 py-3 ">Êtes-vous sûr de vouloir supprimer cette demande de congé ?</p>
+            <div>
+                <div class="mx-3 mt-3 px-3 py-4 bg-dark row d-flex justify-content-between align-items-center">
+                    <div class="btn btn-primary btn-circle"><i class="fas fa-user"></i></div>
+                    <div class="text-light">
+                        #@Html.DisplayFor(modelItem => Model.CongeID)
+                    </div>
+                    <div class="text-light">
+                        @Html.DisplayFor(modelItem => Model.Collaborateur.FullName)
+                    </div>
+                    <div class="text-light"><i>Il y a @Html.DisplayFor(modelItem => ((TimeSpan)(DateTime.Now - Model.EnvoiDate)).Days) jour(s)</i></div>
+                    @if (Model.Statut.Label == MyCompanyManager.Models.Statuts.Accepte)
+                    {
+                        <div class="text-success text-uppercase"><i>@Html.DisplayFor(modelItem => Model.Statut.Label)</i></div>
+                    }
+                    else if (Model.Statut.Label == MyCompanyManager.Models.Statuts.Refuse)
+                    {
+                        <div class="text-danger text-uppercase"><i>@Html.DisplayFor(modelItem => Model.Statut.Label)</i></div>
+                    }
+                    else
+                    {
+                        <div class="text-warning text-uppercase"><i>@Html.DisplayFor(modelItem => Model.Statut.Label)</i></div>
+                    }
+                    <div>
+                        <button type="button" class="btn btn-light btn-circle dropdown-button" /><i class="fas fa-arrow-down"></i>
+                    </div>
+                </div>
+                <div class="dropdown-content bg-light mx-3 mb-4 d-flex align-items-center row" style="height: 0; visibility: hidden">
+                    <div class="offset-2 col-2"><span class="text-title">@Html.DisplayFor(modelItem => Model.CongeType.Label)</span></div>
+                    <div class="col-3">Du <span class="text-title">@Html.DisplayFor(modelItem => Model.DateDebut)</span> au <span class="text-title">@Html.DisplayFor(modelItem => Model.DateFin)</span></div>
+                    <div class="col-2">Déposé le <span class="text-title">@Html.DisplayFor(modelItem => Model.EnvoiDate)</span></div>
+                    <div class="col-3">
+                        <div class="text-title">Commentaire :</div>
+                        <div>@Html.DisplayFor(modelItem => Model.Commentaire)</div>
+                    </div>
+                </div>
+                <div class="pb-3 pt-2">
+                    <form asp-action="Delete" class="row mx-0 d-flex justify-content-around">
+                        <input type="submit" value="CONFIRMER" class="nav-link btn-confirm-dark col-4" />
+                        <a asp-action="Show" class="nav-link btn-confirm-dark text-center col-4">ANNULER</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".dropdown-button").click(function() {
+            let index = $(".dropdown-button").index(this);
+            if ($(".dropdown-content")[index].style.height == "0px") {
+                $(".dropdown-content")[index].style.height = "auto";
+                $(".dropdown-content")[index].style.opacity = "1";
+                $(".dropdown-content")[index].style.padding = "15px";
+                $(".dropdown-content")[index].style.visibility = "visible";
+                $(".fa-arrow-down")[index].classList.add("fa-rotate-180");
+            } else {
+                $(".dropdown-content")[index].style.visibility = "hidden";
+                $(".dropdown-content")[index].style.height = "0";
+                $(".dropdown-content")[index].style.padding = "0";
+                $(".dropdown-content")[index].style.opacity = "0";
+                $(".fa-arrow-down")[index].classList.remove("fa-rotate-180");
+            }
+    })
+    })
+</script>

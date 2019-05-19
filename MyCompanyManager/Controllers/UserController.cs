@@ -11,8 +11,7 @@ namespace MyCompanyManager.Controllers
     {
         public ActionResult Connect()
         {
-            User user = new User();
-            return View(user);
+            return View();
         }
     }
 }

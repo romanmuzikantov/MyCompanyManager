@@ -1,0 +1,172 @@
+﻿@model MyCompanyManager.Models.MyCompanyManagerViewModels.CongeOverallData
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@section NavigationMain
+{
+    @{
+        await Html.RenderPartialAsync("_NavigationPartial", Model.CurrentUserRole);
+    }
+}
+
+<div class="mt-3 pl-3">
+    <h2>ACCUEIL</h2>
+    <div class="bg-primary-light mb-3">
+        <h3 class="p-2">QUOTA</h3>
+        <div class="ml-3 pb-4 pt-2 mr-3">
+            @if (Model.CurrentUserRole == "Collaborateur")
+            {
+                <div class="bg-dark m-0 p-2 text-light"><h5 class="m-0 p-0">Congés</h5></div>
+                <div class="quota bg-light">
+                    <div class="m-3">
+                        <p class="mb-2">Vous avez pris <span class="text-title">@Html.DisplayFor(modelItem => Model.QuotaConges)</span> jour(s) de congé cette année.</p>
+                        <p>Il vous reste <span class="text-title">@(22 - Model.QuotaConges)</span> jour(s) de congé cette année sur un total de <span class="text-title">22</span> jours possibles</p>
+                    </div>
+                </div>
+                <div class="bg-dark m-0 p-2 text-light mt-3"><h5 class="m-0 p-0">Maladies</h5></div>
+                <div class="quota bg-light">
+                    <div class="m-3">
+                        <p class="mb-2">Vous avez pris <span class="text-title">@Html.DisplayFor(modelItem => Model.QuotaMaladies)</span> jour(s) de congé maladie cette année.</p>
+                    </div>
+                </div>
+            }
+            @if (Model.CurrentUserRole == "Responsable")
+            {
+                <div class="bg-dark m-0 p-2 text-light row"><h5 class="m-0 p-0">Demande(s) de congé(s) en attente</h5><form asp-action="Handle" method="get"><input type="hidden" name="statut" value="2" /><input class="px-0 ml-3 bg-transparent border-0 btn-link" type="submit" value="Voir" /></form></div>
+                <div class="quota bg-light">
+                    <div class="m-3">
+                        <p class="mb-2">Vous avez <span class="text-title">@Html.DisplayFor(modelItem => Model.NbrCongeAttente)</span> demande(s) de congé(s) en attente.</p>
+                    </div>
+                </div>
+                <div class="bg-dark m-0 p-2 text-light mt-3 row"><h5 class="m-0 p-0">Demande(s) de suppression en attente</h5><form asp-action="Handle" method="get"><input type="hidden" name="statut" value="4" /><input class="px-0 ml-3 bg-transparent border-0 btn-link" type="submit" value="Voir" /></form></div>
+                <div class="quota bg-light">
+                    <div class="m-3">
+                        <p class="mb-2">Vous avez <span class="text-title">@Html.DisplayFor(modelItem => Model.NbrSuppressionAttente)</span> demande(s) de suppression de congé(s) en attente.</p>
+                    </div>
+                </div>
+            }
+            @if (Model.CurrentUserRole == "Directeur")
+            {
+                <div class="bg-dark m-0 p-2 text-light row"><h5 class="m-0 p-0">Absence(s) ce mois-ci</h5><form asp-controller="Absences" asp-action="Show" method="get"><input type="hidden" name="debut" value="@ViewBag.StartMonth" /><input type="hidden" name="fin" value="@ViewBag.EndMonth" /><input class="px-0 ml-3 bg-transparent border-0 btn-link" type="submit" value="Voir" /></form></div>
+                <div class="quota bg-light">
+                    <div class="m-3">
+                        <p class="mb-2">Il y a <span class="text-title">@Html.DisplayFor(modelItem => Model.NbrCollaborateurAbsent)</span> collaborateur(s) absent(s) ce mois-ci.</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="bg-primary-light mb-3">
+        @if (Model.CurrentUserRole == "Collaborateur")
+        {
+            <h3 class="p-2">DERNIERES DEMANDES DE CONGES</h3>
+            <div class="pb-3">
+                @{
+                    await Html.RenderPartialAsync("_CongesCollaborateurPartial");
+                }
+            </div>
+        }
+        @if (Model.CurrentUserRole == "Responsable")
+        {
+            <h3 class="p-2">DEMANDES DE CONGES RECENTES</h3>
+            <div class="pb-3">
+                @foreach (var conge in Model.CongeEnAttente)
+                {
+                    await Html.RenderPartialAsync("_CongesResponsablePartial", conge);
+                }
+            </div>
+        }
+        @if (Model.CurrentUserRole == "Directeur")
+        {
+            <h3 class="p-2">ABSENCES D'AUJOURD'HUI</h3>
+            <div class="pb-3">
+                @foreach (var conge in Model.TodayAbsences)
+                {
+                    await Html.RenderPartialAsync("_AbsencesCollaborateurPartial", conge);
+                }
+            </div>
+        }
+    </div>
+    <div class="bg-primary-light mb-3">
+        @if (Model.CurrentUserRole == "Collaborateur")
+        {
+            <h3 class="p-2">DERNIERES ABSENCES</h3>
+            <div class="pb-3">
+                @foreach (var absence in Model.Absences)
+                {
+                    await Html.RenderPartialAsync("_AbsencesCollaborateurPartial", absence);
+                }
+            </div>
+        }
+        @if (Model.CurrentUserRole == "Responsable")
+        {
+            <h3 class="p-2">DEMANDES DE SUPPRESSION RECENTES</h3>
+            <div class="pb-3">
+                @foreach (var conge in Model.CongeModel)
+                {
+                    await Html.RenderPartialAsync("_CongesResponsablePartial", conge);
+                }
+            </div>
+        }
+        @if (Model.CurrentUserRole == "Directeur")
+        {
+            <h3 class="p-2">ABSENCES A VENIR</h3>
+            <div class="pb-3">
+                @foreach (var conge in Model.IncomingAbsences)
+                {
+                    await Html.RenderPartialAsync("_AbsencesCollaborateurPartial", conge);
+                }
+            </div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".dropdown-button").click(function () {
+            let index = $(".dropdown-button").index(this);
+            if ($(".dropdown-content")[index].style.height == "0px") {
+                $(".dropdown-content")[index].style.height = "auto";
+                $(".dropdown-content")[index].style.opacity = "1";
+                $(".dropdown-content")[index].style.padding = "15px";
+                $(".dropdown-content")[index].style.visibility = "visible";
+                $(".fa-arrow-down")[index].classList.add("fa-rotate-180");
+                let items = $(".dropdown-content")[index];
+                for (let i = 0; i < items.childElementCount; i++) {
+                    for (let j = 0; j < items.children[i].childElementCount; j++) {
+                        items.children[i].children[j].style.height = "auto";
+                    }
+                }
+            } else {
+                $(".dropdown-content")[index].style.visibility = "hidden";
+                $(".dropdown-content")[index].style.height = "0";
+                $(".dropdown-content")[index].style.padding = "0";
+                $(".dropdown-content")[index].style.opacity = "0";
+                $(".fa-arrow-down")[index].classList.remove("fa-rotate-180");
+                let items = $(".dropdown-content")[index];
+                for (var i = 0; i < items.childElementCount; i++) {
+                    for (var j = 0; j < items.children[i].childElementCount; j++) {
+                        items.children[i].children[j].style.height = "0";
+                    }
+                }
+            }
+        })
+    })
+</script>
+<script>
+    const vues = document.querySelectorAll(".denyBtnComment");
+    const denyBtn = document.querySelectorAll(".btn-deny")
+    Array.prototype.forEach.call(vues, (el, index) => new Vue({
+        el,
+        data: {
+            comment: ''
+        }
+    }))
+</script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>

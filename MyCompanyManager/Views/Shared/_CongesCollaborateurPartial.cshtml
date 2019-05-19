@@ -1,0 +1,52 @@
+﻿@model MyCompanyManager.Models.MyCompanyManagerViewModels.CongeOverallData
+
+
+@foreach (var conge in Model.Conges)
+{
+    <div class="mx-3 mt-3 px-3 py-4 bg-dark row align-items-center">
+        <div class="col-2">
+            <div class="btn btn-primary btn-circle"><i class="fas fa-user"></i></div>
+        </div>
+        <div class="text-light col-2">
+            #@Html.DisplayFor(modelItem => conge.CongeID)
+        </div>
+        <div class="text-light col-2">
+            @Html.DisplayFor(modelItem => conge.Collaborateur.FullName)
+        </div>
+        <div class="text-light col-2"><i>Il y a @Html.DisplayFor(modelItem => ((TimeSpan)(DateTime.Now - conge.EnvoiDate)).Days) jour(s)</i></div>
+        <div class="col-2 text-uppercase">
+            @if (conge.Statut.Label == MyCompanyManager.Models.Statuts.Accepte)
+            {
+                <div class="text-success"><i>@Html.DisplayFor(modelItem => conge.Statut.Label)</i></div>
+            }
+            else if (conge.Statut.Label == MyCompanyManager.Models.Statuts.Refuse)
+            {
+                <div class="text-danger"><i>@Html.DisplayFor(modelItem => conge.Statut.Label)</i></div>
+            }
+            else
+            {
+                <div class="text-warning"><i>@Html.DisplayFor(modelItem => conge.Statut.Label)</i></div>
+            }
+        </div>
+        <div class="col-2 d-flex justify-content-end">
+            @if (((conge.Statut.Label == MyCompanyManager.Models.Statuts.Accepte && conge.DateDebut > DateTime.Now) || conge.Statut.Label == MyCompanyManager.Models.Statuts.Attente) && Model.CurrentUserRole == "Collaborateur")
+            {
+                <a asp-action="Delete" asp-route-id="@conge.CongeID" class="btn btn-light btn-circle mr-2"><i class="fas fa-times mt-1"></i></a>
+            }
+            <button type="button" class="btn btn-light btn-circle dropdown-button" /><i class="fas fa-arrow-down"></i>
+        </div>
+    </div>
+    <div class="dropdown-content bg-light mx-3 mb-4 d-flex align-items-center row" style="height: 0; visibility: hidden">
+        <div class="col-2 d-flex flex-column">
+            <span class="text-title">@Html.DisplayFor(modelItem => conge.Collaborateur.Equipe.Label)</span>
+            <span class="text-title">@Html.DisplayFor(modelItem => conge.Collaborateur.Specialite.Label)</span>
+        </div>
+        <div class="col-2"><span class="text-title">@Html.DisplayFor(modelItem => conge.CongeType.Label)</span></div>
+        <div class="col-3">Du <span class="text-title">@Html.DisplayFor(modelItem => conge.DateDebut)</span> au <span class="text-title">@Html.DisplayFor(modelItem => conge.DateFin)</span></div>
+        <div class="col-2">Déposé le <span class="text-title">@Html.DisplayFor(modelItem => conge.EnvoiDate)</span></div>
+        <div class="col-3">
+            <div class="text-title">Commentaire :</div>
+            <div>@Html.DisplayFor(modelItem => conge.Commentaire)</div>
+        </div>
+    </div>
+}

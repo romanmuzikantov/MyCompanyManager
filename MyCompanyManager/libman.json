@@ -1,0 +1,55 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "twitter-bootstrap@4.3.1",
+      "destination": "wwwroot/lib/bootstrap/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "jquery@3.3.1",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "tempusdominus-bootstrap-4@5.1.2",
+      "destination": "wwwroot/lib/tempusdominus-bootstrap-4/"
+    },
+    {
+      "library": "moment.js@2.24.0",
+      "destination": "wwwroot/lib/moment.js/"
+    },
+    {
+      "library": "jquery-validate@1.19.0",
+      "destination": "wwwroot/lib/jquery/jquery-validate/",
+      "files": [
+        "jquery.validate.min.js",
+        "jquery.validate.js"
+      ]
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.11",
+      "destination": "wwwroot/lib/jquery/jquery-validation-unobtrusive/",
+      "files": [
+        "jquery.validate.unobtrusive.min.js",
+        "jquery.validate.unobtrusive.js"
+      ]
+    },
+    {
+      "library": "vue@2.6.10",
+      "destination": "wwwroot/lib/vue/"
+    },
+    {
+      "library": "jqueryui@1.12.1",
+      "destination": "wwwroot/lib/jqueryui/"
+    },
+    {
+      "library": "popper.js@1.15.0",
+      "destination": "wwwroot/lib/popper.js/"
+    },
+    {
+      "library": "mdbootstrap@4.8.0",
+      "destination": "wwwroot/lib/mdbootstrap/"
+    }
+  ]
+}

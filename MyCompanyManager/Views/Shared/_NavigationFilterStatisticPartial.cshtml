@@ -1,0 +1,49 @@
+﻿<div class="sticky-top nav-main">
+    <div class="">
+        <ul class="pl-4 pr-4 pt-4 nav container-fluid d-flex flex-column">
+            <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Conges" asp-action="Index">ACCUEIL</a></li>
+            <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Conges" asp-action="Show">DEMANDES DE CONGES</a></li>
+            <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Absences" asp-action="Show">ABSENCES</a></li>
+            <li class="nav-item"><a class="nav-link custom-nav-link mb-4" asp-controller="Statistiques" asp-action="Index">STATISTIQUES</a></li>
+        </ul>
+    </div>
+    <div class="bg-light mx-4 p-2">
+        <div class="text-dark"><h4>FILTRE</h4></div>
+        <form class="py-3" asp-action="Index" method="get">
+            <div class="col-12">
+                <label class="mb-0 bg-dark text-light p-1 ml-1">Année</label>
+                <div>
+                    <select class="custom-select" name="year">
+                        <option selected>/</option>
+                        <option value="2019" >2019</option>
+                        <option value="2018" >2018</option>
+                        <option value="2017" >2017</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <label class="mb-0 bg-dark text-light p-1 ml-1">Mois</label>
+                <div>
+                    <select class="custom-select" name="month">
+                        <option selected>/</option>
+                        <option value="1" >Janvier</option>
+                        <option value="2" >Février</option>
+                        <option value="3" >Mars</option>
+                        <option value="4" >Avril</option>
+                        <option value="5" >Mai</option>
+                        <option value="6" >Juin</option>
+                        <option value="7" >Juillet</option>
+                        <option value="8" >Août</option>
+                        <option value="9" >Septembre</option>
+                        <option value="10" >Octobre</option>
+                        <option value="11" >Novembre</option>
+                        <option value="12" >Décembre</option>
+                    </select>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center mt-3">
+                <input type="submit" value="CHERCHER" class="nav-link btn-confirm-dark" />
+            </div>
+        </form>
+    </div>
+</div>
