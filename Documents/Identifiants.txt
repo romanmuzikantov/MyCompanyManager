@@ -1,0 +1,83 @@
+// DIRECTEUR
+Id=directeur@mycompany.com
+MDP=D.directeur1
+
+// RESPONSABLE INFRASTRUCTURE
+Id=r.infrastructure@mycompany.com
+MDP=R.infrastructure1
+
+// RESPONSABLE DEVELOPPEMENT
+Id=r.developpement@mycompany.com
+MDP=R.developpement1
+
+// COLLABORATEUR1 OS (Infrastructure)
+Id=c.infrastructure_os1@mycompany.com
+MDP=C.technique.os1
+
+// COLLABORATEUR2 OS (Infrastructure)
+Id=c.infrastructure_os2@mycompany.com
+MDP=C.technique.os2
+
+// COLLABORATEUR3 OS (Infrastructure)
+Id=c.infrastructure_os3@mycompany.com
+MDP=C.technique.os3
+
+// COLLABORATEUR1 RESEAU (Infrastructure)
+Id=c.infrastructure_reseau1@mycompany.com
+MDP=C.technique.reseau1
+
+// COLLABORATEUR2 RESEAU (Infrastructure)
+Id=c.infrastructure_reseau2@mycompany.com
+MDP=C.technique.reseau2
+
+// COLLABORATEUR3 RESEAU (Infrastructure)
+Id=c.infrastructure_reseau3@mycompany.com
+MDP=C.technique.reseau3
+
+// COLLABORATEUR1 SECURITE(Infrastructure)
+Id=c.infrastructure_securite1@mycompany.com
+MDP=C.technique.securite1
+
+// COLLABORATEUR2 SECURITE(Infrastructure)
+Id=c.infrastructure_securite2@mycompany.com
+MDP=C.technique.securite2
+
+// COLLABORATEUR3 SECURITE(Infrastructure)
+Id=c.infrastructure_securite3@mycompany.com
+MDP=C.technique.securite3
+
+// COLLABORATEUR1 WEB(Developpement)
+Id=c.developpement_web1@mycompany.com
+MDP=C.developpement.web1
+
+// COLLABORATEUR2 WEB(Developpement)
+Id=c.developpement_web2@mycompany.com
+MDP=C.developpement.web2
+
+// COLLABORATEUR3 WEB(Developpement)
+Id=c.developpement_web3@mycompany.com
+MDP=C.developpement.web3
+
+// COLLABORATEUR1 MAINFRAME(Developpement)
+Id=c.developpement_mainframe1@mycompany.com
+MDP=C.developpement.mainframe1
+
+// COLLABORATEUR2 MAINFRAME(Developpement)
+Id=c.developpement_mainframe2@mycompany.com
+MDP=C.developpement.mainframe2
+
+// COLLABORATEUR3 MAINFRAME(Developpement)
+Id=c.developpement_mainframe3@mycompany.com
+MDP=C.developpement.mainframe3
+
+// COLLABORATEUR1 CLIENT LOURD(Developpement)
+Id=c.developpement_clientlourd1@mycompany.com
+MDP=C.developpement.clientlourd1
+
+// COLLABORATEUR2 CLIENT LOURD(Developpement)
+Id=c.developpement_clientlourd2@mycompany.com
+MDP=C.developpement.clientlourd2
+
+// COLLABORATEUR3 CLIENT LOURD(Developpement)
+Id=c.developpement_clientlourd3@mycompany.com
+MDP=C.developpement.clientlourd3
